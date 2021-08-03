@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+{% block content %}
+    <div class="container">
+        <!--Navigation-->
+        <div class="navigate">
+            <span>Search: {{query}} --> {{objects|length}} Result(s) Found</span>
+        </div>
+        <!--Display posts table-->
+        <div class="posts-table">
+            <div class="table-head">
+                <div class="status">Status</div>
+                <div class="subjects">Subjects</div>
+                <div class="replies">Replies/Views</div>
+                <div class="last-reply">Last Reply</div>
+            </div>
+
+            {% for post in objects %}
+            <div class="table-row">
+                <div class="status"><i class="fa fa-fire"></i></div>
+                <div class="subjects">
+                    <a href="{{post.get_url}}">{{post.title}}</a>
+                    <br>
+                    <span>Started by <b><a href="">{{post.user.fullname|title}}</a></b> .</span>
+                </div>
+                <div class="replies">
+                    {{post.num_comments}} comments <br> {% get_hit_count for post %} views
+                </div>
+
+                {% if post.last_reply %}
+                <div class="last-reply">
+                    {{post.last_reply.date|date}}
+                    <br>By <b><a href="">{{post.last_reply.user.fullname|title}}</a></b>
+                </div>
+                {% else %}
+                <div class="last-reply">
+                    {{post.date|date}}
+                    <br>By <b><a href="">{{post.user.fullname|title}}</a></b>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            
+            
+        </div>
+        <!--Pagination starts-->
+            <div class="pagination">
+                pages: {% for num_page in posts.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a> {% endfor %}
+            </div>
+        <!--pagination ends-->
+    </div>
+
+    {% endblock content %}
