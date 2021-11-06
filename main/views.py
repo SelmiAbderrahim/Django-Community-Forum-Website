@@ -13,7 +13,10 @@ def home(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
-    last_post = Post.objects.latest("date")
+    try:
+        last_post = Post.objects.latest("date")
+    except:
+        last_post = []
 
     context = {
         "forums":forums,
@@ -21,7 +24,7 @@ def home(request):
         "num_users":num_users,
         "num_categories":num_categories,
         "last_post":last_post,
-        "title": "Home Page"
+        "title": "OZONE forum app"
     }
     return render(request, "forums.html", context)
 
@@ -45,7 +48,7 @@ def detail(request, slug):
 
     context = {
         "post":post,
-        "title": post.title,
+        "title": "OZONE: "+post.title,
     }
     update_views(request, post)
 
@@ -66,7 +69,7 @@ def posts(request, slug):
     context = {
         "posts":posts,
         "forum": category,
-        "title": "Posts"
+        "title": "OZONE: Posts"
     }
 
     return render(request, "posts.html", context)
@@ -87,7 +90,7 @@ def create_post(request):
             return redirect("home")
     context.update({
         "form": form,
-        "title": "Create New Post"
+        "title": "OZONE: Create New Post"
     })
     return render(request, "create_post.html", context)
 
@@ -95,7 +98,7 @@ def latest_posts(request):
     posts = Post.objects.all().filter(approved=True)[:10]
     context = {
         "posts":posts,
-        "title": "Latest 10 Posts"
+        "title": "OZONE: Latest 10 Posts"
     }
 
     return render(request, "latest-posts.html", context)

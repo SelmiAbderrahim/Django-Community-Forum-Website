@@ -29,7 +29,7 @@
                 </ul>
             </nav>
             <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
-            <div class="brand">My Forum</div>
+            <div class="brand">OZONE</div>
             {% if user.is_authenticated %}
             <div style="font-size:50px;font-weight300px;margin-left:100px;"><a href="{% url 'create_post' %}">+</a></div>
             {% endif %}
@@ -49,11 +49,16 @@
                 </div>
                 </form>
     </header>
+    {% if messages %}
+        {% for message in messages %}
+            <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> {{message}} </div>
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock content %}
-
+    <div style="margin-bottom: 150px;"></div>
     <footer>
-        <span>&copy;  Selmi Abderrahim | All Rights Reserved</span>
+        <span>&copy;  Elwil Reyes Hernandez | All Rights Reserved</span>
     </footer>
     <script src="{% static 'main.js' %}"></script>
 </body>

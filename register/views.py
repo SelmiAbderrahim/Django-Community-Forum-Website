@@ -4,7 +4,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from register.forms import UpdateForm
 from django.contrib.auth import logout as lt
+from django.contrib import messages
+from django.contrib.auth.models import User
 
+#usernames = [user.username for user in User.objects.all()]
 
 def signup(request):
     context = {}

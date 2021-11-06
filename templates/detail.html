@@ -39,7 +39,7 @@
         {% if post.closed == True %}
         <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> This Topic Is Closed! </div>
         {% else %}
-        {% if request.user.is_authenticted %}
+        {% if request.user.is_authenticated %}
         <form action="." method="post">
             {% csrf_token %}
             <div class="comment-area hide" id="comment-area">
@@ -48,7 +48,7 @@
             </div>
         </form>
         {% else %}
-        <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> You need to <a href="{% url 'signin' %}"><b>login</b></a> to comment or reply.! </div>
+<div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> You need to <a href="{% url 'signin' %}"><b>login</b></a> to comment or reply.! </div>        
 
         {% endif %}
 
