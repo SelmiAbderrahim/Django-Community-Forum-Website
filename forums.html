@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="subforum">
+            {% if forums %}
+                <div class="subforum-title">
+                    <h1>General Information</h1>
+                </div>
+
+                {% for forum in forums %}
+                    <div class="subforum-row">
+                        <div class="subforum-icon subforum-column center">
+                            <i class="fa fa-gamepad"></i>
+                        </div>
+                        <div class="subforum-description subforum-column">
+                            <h4><a href="{{forum.get_url}}">{{forum.title}}</a></h4>
+                            <p>Description: {{forum.description}} </p>
+                        </div>
+                        <div class="subforum-stats subforum-column center">
+                            <span>{{forum.num_posts}} Posts</span>
+                        </div>
+                        <div class="subforum-info subforum-column">
+                            {% if forum.last_post %}
+                                <b><a href="{{forum.last_post.get_url}}">Last post</a></b> by <a href="">{{forum.last_post.user.fullname|title}}</a> 
+                                <br>on <small>{{forum.last_post.date|date}}</small>
+                            {% else %}
+                                <span>No posts in this category.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <div class="subforum-title">
+                    <h1><i class="fa fa-frown-o"></i>&nbsp;you have no posts yet.</h1>
+                </div>
+            {% endif %}
+        </div>
+        <!--More-->
+        
+        
+        
+    </div>
+
+    <!-- Forum Info -->
+    <div class="forum-info">
+        <div class="chart">
+            MyForum - Stats &nbsp;<i class="fa fa-bar-chart"></i>
+        </div>
+        <span><u>{{num_posts}}</u> Posts in <u>{{num_categories}}</u> Categories by <u>{{num_users}}</u> Members.</span><br>
+        {% if forums %}
+            <span>Latest post: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> on {{last_post.date|date}} By <a href="">{{last_post.user.fullname|title}}</a></span>.<br>
+            <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
+        {% endif %}
+    </div>
+
+    {% endblock content %}

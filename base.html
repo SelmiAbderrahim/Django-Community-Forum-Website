@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!--NavBar Section-->
+        <div class="navbar">
+            <nav class="navigation hide" id="navigation">
+                <span class="close-icon" id="close-icon" onclick="showIconBar()"><i class="fa fa-close"></i></span>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="{% url 'home' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a href="{% url 'signup' %}">Signup</a></li>
+                    <li class="nav-item"><a href="{% url 'signin' %}">Signin</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
+            <div class="brand">OZONE</div>
+            {% if user.is_authenticated %}
+            <div style="font-size:50px;font-weight300px;margin-left:100px;"><a href="{% url 'create_post' %}">+</a></div>
+            {% endif %}
+        </div>
+        <!--SearchBox Section-->
+                <form action="{% url 'search_result' %}" role="form" method="GET">
+                <div class="search-box">
+                    <div>
+                        <select name="search-box" id="">
+                            <option value="Everything">Everything</option>
+                            <option value="Titles">Titles</option>
+                            <option value="Descriptions">Descriptions</option>
+                        </select>
+                        <input type="text" name="q" placeholder="search ...">
+                        <button type="submit" name="search"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                </form>
+    </header>
+    {% if messages %}
+        {% for message in messages %}
+            <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> {{message}} </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}
+    {% endblock content %}
+    <div style="margin-bottom: 150px;"></div>
+    <footer>
+        <span>&copy;  Elwil Reyes Hernandez | All Rights Reserved</span>
+    </footer>
+    <script src="{% static 'main.js' %}"></script>
+</body>
+</html>
